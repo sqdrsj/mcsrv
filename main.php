@@ -26,11 +26,12 @@ if(!isset($_REQUEST['record_id']))							//ÊÇ·ñÓÐ¼ÇÂ¼id,Ã»ÓÐÎªÌí¼ÓÓòÃû,ÓÐÔòÎªÐÞ¸
 	$content=dnspod_freeset_srv($domain,$play_domain,$port,$srv_domain,$login_token);
 															//Á¬½Óapi »ñÈ¡·µ»ØµÄÊý×é
 	if($content['status']['code']!=1)
-	{
-		$res=array('errno'=>'3','errmsg'=>$content['status']['message']);
-		echo json_encode($res);									//´íÎóÐÅÏ¢Êä³ö
-		return;													//½áÊø
-	}
+		{
+			$res=array('errno'=>'3','errmsg'=>$content['status']['message']);
+			echo json_encode($res);									//´íÎóÐÅÏ¢Êä³ö
+			return;													//½áÊø
+		}
+
 	$res=array(
 	'errno' =>'1',
 	'errmsg'=>iconv("gb2312","UTF-8",'Ó³Éä³É¹¦,ÓòÃûÎª:'.$srv_domain.'.'.$domain.', Çë¼Ç×¡ID,ÐÞ¸ÄºÍÉ¾³ýÓòÃûÐèÒª'),
@@ -42,21 +43,21 @@ if(!isset($_REQUEST['record_id']))							//ÊÇ·ñÓÐ¼ÇÂ¼id,Ã»ÓÐÎªÌí¼ÓÓòÃû,ÓÐÔòÎªÐÞ¸
 else														//ÐÞ¸ÄsrvÓòÃûÐÅÏ¢
 {
 	$record_id=$_REQUEST['record_id'];							//¸³Öµ¼ÇÂ¼id
-	$content=dnspod_freeset_srv_remove($domain,$play_domain,$port,$srv_domain,$record_id,$login_token);
+ 	$content=dnspod_freeset_srv_remove($domain,$play_domain,$port,$srv_domain,$record_id,$login_token);
 															//Á¬½Óapi »ñÈ¡·µ»ØÊý×é
 	if($content['status']['code']!=1)
-	{
+		{
 		$res=array('errno'=>'4','errmsg'=>$content['status']['message']);
 		echo json_encode($res);									//´íÎóÐÅÏ¢Êä³ö
 		return;													//½áÊø
-	}
+		}
 	
 	$res=array(
 		'errno' =>'1',
 		'errmsg'=>iconv("gb2312","UTF-8",'ÐÞ¸Ä³É¹¦,ÐÂÓòÃûÎª:'.$srv_domain.'.'.$domain.', Çë¼Ç×¡ÐÂID,ÐÞ¸ÄºÍÉ¾³ýÓòÃûÐèÒª'),
-		'record_id'    =>$content['record']['record_id'],
+		'record_id'    =>$content['record']['id'],
 	);															//³É¹¦,ÐÅÏ¢
-	echo json_encode($res);										//Êä³ö
+	echo json_encode($res);										//Êä³ö 
 }
 
 
